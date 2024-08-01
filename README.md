@@ -23,5 +23,5 @@ pip install -r requirements.txt
 
 ## Start the Script 
 ```
-python main.py
+python src/gauf/gauf.py
 ```

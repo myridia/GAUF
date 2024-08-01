@@ -4,25 +4,30 @@ import requests
 import json
 import toml
 
-config = toml.load("config.toml")
 
-token = config["token"]
+class Gauf():
+  def __init__(self):
+    print("...init")
+    
+  def update(self):  
+    config = toml.load("config.toml")
+    token = config["token"]
+    g = Github(token)
+    print(token)
 
-g = Github(token)
+    g_user = g.get_user()
 
-g_user = g.get_user()
+    # put here your list you like to ignore
+    ignore_repos = ['amazon-e-commerce-clone-app','cli-media-cleanup']
 
-# put here your list you like to ignore
-ignore_repos = ['amazon-e-commerce-clone-app','cli-media-cleanup']
+    amount = 0
+    count = 0
 
-amount = 0
-count = 0
-
-# Loop the projects
-for repo in g_user.get_repos():
-    amount += 1
-    #print(repo.name,repo.fork, repo.parent, repo.source)
-    if repo.fork:
+    # Loop the projects
+    for repo in g_user.get_repos():
+      amount += 1
+      print(repo.name,repo.fork, repo.parent, repo.source)
+      if repo.fork:
         repo_parent_commit = repo.parent.get_branch(repo.parent.default_branch).commit.sha
         repo_commit = repo.get_branch(repo.default_branch).commit.sha        
         print(repo.name)
@@ -52,5 +57,8 @@ for repo in g_user.get_repos():
         #    pass
 
 
-    
+if __name__ == "__main__":
+  g = Gauf()
+  g.update()
+
 
